@@ -32,7 +32,7 @@
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
     <scope>runtime</scope>
-</dependency>
+    </dependency>
     <dependency>
        <groupId>org.springframework.plugin</groupId>
        <artifactId>spring-plugin-core</artifactId>
@@ -41,7 +41,7 @@
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
     <scope>runtime</scope>
-</dependency>
+    </dependency>
     <dependency>
        <groupId>org.postgresql</groupId>
        <artifactId>postgresql</artifactId>
@@ -61,6 +61,21 @@
        <artifactId>spring-boot-starter-tomcat</artifactId>
        <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>3.10.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>3.17</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
   </dependencies>  
   
   <properties>
