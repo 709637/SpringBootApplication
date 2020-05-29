@@ -9,51 +9,73 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class cutomSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+		
+		auth.inMemoryAuthentication()
+		    .withUser("vipul")
+		    .password("vipul")
+		    .roles("USER")
+		    .and()
+		    .withUser("Rahul")
+		    .password("Rahul")
+		    .roles("ADMIN");
+	}
+	
+	@Bean
+	public PasswordEncoder getPasswordEncode() {
+		return  NoOpPasswordEncoder.getInstance();
+	}
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		http
+	      .authorizeRequests()
+	      .antMatchers("/admin").hasRole("ADMIN")
+	      .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+	      .antMatchers("/").permitAll()
+	      .and().formLogin();
+	}
+	
+//  *******************************Below code is for complete authorization and authentication with user table in DB
+	
+//	@Autowired
+//	MyUSerDetailsService userDetailsService;
+//
 //	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		// TODO Auto-generated method stub
+//		auth.userDetailsService(userDetailsService);
 //		
-//		auth.inMemoryAuthentication()
-//		    .withUser("vipul")
-//		    .password("vipul")
-//		    .roles("USER")
-//		    .and()
-//		    .withUser("Rahul")
-//		    .password("Rahul")
-//		    .roles("ADMIN");
 //	}
+//	
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
+//			// TODO Auto-generated method stub
+//			http.authorizeRequests()
+//			    .antMatchers("/admin").access("ADMIN")
+//			    .antMatchers("./user").access("USER")
+//			    .antMatchers("/").permitAll()
+//			    .and().formLogin();
+//		}
 //	
 //	@Bean
 //	public PasswordEncoder getPasswordEncode() {
 //		return  NoOpPasswordEncoder.getInstance();
 //	}
 	
-	@Autowired
-	MyUSerDetailsService userDetailsService;
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
-		auth.userDetailsService(userDetailsService);
-		
-	}
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-			// TODO Auto-generated method stub
-			http.authorizeRequests()
-			    .antMatchers("/admin").access("ADMIN")
-			    .antMatchers("./user").access("USER")
-			    .antMatchers("/").permitAll()
-			    .and().formLogin();
-		}
+//  *******************************Above code is for complete authorization and authentication with user table in DB
 	
-	@Bean
-	public PasswordEncoder getPasswordEncode() {
-		return  NoOpPasswordEncoder.getInstance();
-	}
+	
+	
+	
+	
+	
 	
 }
